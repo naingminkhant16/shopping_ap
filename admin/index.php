@@ -26,18 +26,21 @@ if (isset($_POST['search'])) {
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Blog Listing</h3>
+            <h3 class="card-title">Products Listing</h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <a href="add.php" class="btn btn-success">Create Blogs</a><br><br>
+            <a href="product_add.php" class="btn btn-success">Create New Product</a><br><br>
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th style="width: 10px">#</th>
-                  <th>Title</th>
-                  <th>Content</th>
-                  <th style="width: 40px">Actions</th>
+                  <th style="width: 10px;">#</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Category</th>
+                  <th>In Stock</th>
+                  <th>Price</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -52,43 +55,49 @@ if (isset($_POST['search'])) {
                 $offset = ($pageNo - 1) * $numOfrecs;
                 if (empty($_POST['search']) && empty($_COOKIE['search'])) {
                   ////pdo section
-                  $statement = $pdo->prepare("SELECT * FROM posts ORDER BY id desc");
+                  $statement = $pdo->prepare("SELECT * FROM products ORDER BY id desc");
                   $statement->execute();
                   $RawResult = $statement->fetchALl();
                   //calculate count of pages 
                   $totalPages = ceil(count($RawResult) / $numOfrecs);
                   //offseted result values
-                  $statement = $pdo->prepare("SELECT * FROM posts ORDER BY id desc LIMIT $offset,$numOfrecs");
+                  $statement = $pdo->prepare("SELECT * FROM products ORDER BY id desc LIMIT $offset,$numOfrecs");
                   $statement->execute();
                   $result = $statement->fetchALl();
                 } else {
                   ////find Search value from search bar
                   ////pdo section
                   $searchKey = isset($_POST['search']) ? $_POST['search'] : $_COOKIE['search'];
-                  $statement = $pdo->prepare("SELECT * FROM posts WHERE title LIKE '%$searchKey%' ORDER BY id desc");
+                  $statement = $pdo->prepare("SELECT * FROM products WHERE name LIKE '%$searchKey%' ORDER BY id desc");
                   $statement->execute();
                   $RawResult = $statement->fetchALl();
                   //calculate count of pages 
                   $totalPages = ceil(count($RawResult) / $numOfrecs);
                   //offseted result values
-                  $statement = $pdo->prepare("SELECT * FROM posts WHERE title LIKE '%$searchKey%' ORDER BY id desc LIMIT $offset,$numOfrecs");
+                  $statement = $pdo->prepare("SELECT * FROM products WHERE name LIKE '%$searchKey%' ORDER BY id desc LIMIT $offset,$numOfrecs");
                   $statement->execute();
                   $result = $statement->fetchALl();
                 }
                 if ($result) :
                   $i = 1;
                   foreach ($result as $value) :
+                    $cat_stmt = $pdo->prepare("SELECT * FROM categories WHERE id=:id");
+                    $cat_stmt->execute([':id' => $value['category_id']]);
+                    $cat_result = $cat_stmt->fetch(PDO::FETCH_ASSOC);
                 ?>
                     <tr>
                       <td><?= $i ?></td>
-                      <td><?= escape($value['title']) ?></td>
+                      <td><?= escape($value['name']) ?></td>
                       <td>
-                        <p><?= escape(substr($value['content'], 0, 100)) ?></p>
+                        <p><?= escape(substr($value['description'], 0, 30)) ?></p>
                       </td>
+                      <td><?= escape($cat_result['name']) ?></td>
+                      <td><?= escape($value['quantity']) ?></td>
+                      <td>$-<?= escape($value['price']) ?></td>
                       <td>
                         <div class="d-flex">
-                          <a href="edit.php?id=<?= $value['id'] ?>" type="button" class="btn btn-warning m-1">Edit</a>
-                          <a href="delete.php?id=<?= $value['id'] ?>" onclick="return confirm('Are you sure you want to delete?')" type="button" class="btn btn-danger m-1">Delete</a>
+                          <a href="product_edit.php?id=<?= $value['id'] ?>" type="button" class="btn btn-warning m-1">Edit</a>
+                          <a href="product_delete.php?id=<?= $value['id'] ?>" onclick="return confirm('Are you sure you want to delete?')" type="button" class="btn btn-danger m-1">Delete</a>
                         </div>
                       </td>
                     </tr>

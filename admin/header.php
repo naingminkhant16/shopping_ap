@@ -41,6 +41,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       $linkArr = explode('/', $link);
       $page = end($linkArr);
       ?>
+      <?php if($page!='order_list.php' && $page !='order_detail.php'): ?>
       <form class="form-inline ml-3" action="<?php
                                               if ($page == 'category.php') echo "category.php";
                                               elseif ($page == 'manageUsers.php') echo "manageUsers.php";
@@ -56,7 +57,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </div>
         </div>
       </form>
-
+      <?php endif;?>
 
     </nav>
     <!-- /.navbar -->
@@ -106,6 +107,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <i class="fas fa-users-cog"></i>
                 <p>
                   Manage Users
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="order_list.php" class="nav-link">
+                <i class="fas fa-table"></i>
+                <p>
+                  orders
                 </p>
               </a>
             </li>
