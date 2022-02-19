@@ -42,8 +42,8 @@ if ($_POST) {
         $address = $_POST['address'];
         if ($_POST['password']) {
             if (strlen($_POST['password']) < 6) {
-                echo "<script>confirm('Password should have atleast 6 characters! Are you sure you want to continue?');window.location.href='manageUsers.php'</script>";
-                $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                echo "<script>alert('Password should have atleast 6 characters!!');window.location.href='editUser.php?id=" . $_GET['id'] . "'</script>";
+                exit();
             } else {
                 $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
             }

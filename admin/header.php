@@ -41,23 +41,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
       $linkArr = explode('/', $link);
       $page = end($linkArr);
       ?>
-      <?php if($page!='order_list.php' && $page !='order_detail.php'): ?>
-      <form class="form-inline ml-3" action="<?php
-                                              if ($page == 'category.php') echo "category.php";
-                                              elseif ($page == 'manageUsers.php') echo "manageUsers.php";
-                                              elseif ($page == 'index.php') echo "index.php";
-                                              ?>" method="post">
-        <input type="hidden" name="_token" class="form-control" value="<?= $_SESSION['_token'] ?>">
-        <div class="input-group input-group-sm">
-          <input class="form-control form-control-navbar" name="search" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-navbar" type="submit">
-              <i class="fas fa-search"></i>
-            </button>
+      <?php if ($page == 'category.php' || $page == 'manageUsers.php' || $page == 'index.php') : ?>
+        <form class="form-inline ml-3" action="<?php
+                                                if ($page == 'category.php') echo "category.php";
+                                                elseif ($page == 'manageUsers.php') echo "manageUsers.php";
+                                                elseif ($page == 'index.php') echo "index.php";
+                                                ?>" method="post">
+          <input type="hidden" name="_token" class="form-control" value="<?= $_SESSION['_token'] ?>">
+          <div class="input-group input-group-sm">
+            <input class="form-control form-control-navbar" name="search" type="search" placeholder="Search" aria-label="Search">
+            <div class="input-group-append">
+              <button class="btn btn-navbar" type="submit">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
           </div>
-        </div>
-      </form>
-      <?php endif;?>
+        </form>
+      <?php endif; ?>
 
     </nav>
     <!-- /.navbar -->
