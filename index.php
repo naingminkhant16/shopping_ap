@@ -25,36 +25,36 @@ $offset = ($pageNo - 1) * $numOfrecs;
 
 if (empty($_POST['search']) && empty($_COOKIE['search']) && empty($_GET['cat_id'])) {
 	////pdo section
-	$statement = $pdo->prepare("SELECT * FROM products ORDER BY id desc");
+	$statement = $pdo->prepare("SELECT * FROM products WHERE quantity>0 ORDER BY id desc");
 	$statement->execute();
 	$RawResult = $statement->fetchALl();
 	//calculate count of pages 
 	$totalPages = ceil(count($RawResult) / $numOfrecs);
 	//offseted result values
-	$statement = $pdo->prepare("SELECT * FROM products ORDER BY id desc LIMIT $offset,$numOfrecs");
+	$statement = $pdo->prepare("SELECT * FROM products WHERE quantity>0 ORDER BY id desc LIMIT $offset,$numOfrecs");
 	$statement->execute();
 	$result = $statement->fetchALl();
 } elseif (isset($_GET['cat_id'])) {
-	$statement = $pdo->prepare("SELECT * FROM products WHERE category_id=:cat_id ORDER BY id desc");
+	$statement = $pdo->prepare("SELECT * FROM products WHERE category_id=:cat_id AND quantity>0 ORDER BY id desc");
 	$statement->execute([':cat_id' => $_GET['cat_id']]);
 	$RawResult = $statement->fetchALl();
 	//calculate count of pages 
 	$totalPages = ceil(count($RawResult) / $numOfrecs);
 	//offseted result values
-	$statement = $pdo->prepare("SELECT * FROM products WHERE category_id=:cat_id ORDER BY id desc LIMIT $offset,$numOfrecs");
+	$statement = $pdo->prepare("SELECT * FROM products WHERE category_id=:cat_id AND quantity>0 ORDER BY id desc LIMIT $offset,$numOfrecs");
 	$statement->execute([':cat_id' => $_GET['cat_id']]);
 	$result = $statement->fetchALl();
 } else {
 	////find Search value from search bar
 	////pdo section
 	$searchKey = isset($_POST['search']) ? $_POST['search'] : $_COOKIE['search'];
-	$statement = $pdo->prepare("SELECT * FROM products WHERE name LIKE '%$searchKey%' ORDER BY id desc");
+	$statement = $pdo->prepare("SELECT * FROM products WHERE name LIKE '%$searchKey%' AND quantity>0 ORDER BY id desc");
 	$statement->execute();
 	$RawResult = $statement->fetchALl();
 	//calculate count of pages 
 	$totalPages = ceil(count($RawResult) / $numOfrecs);
 	//offseted result values
-	$statement = $pdo->prepare("SELECT * FROM products WHERE name LIKE '%$searchKey%' ORDER BY id desc LIMIT $offset,$numOfrecs");
+	$statement = $pdo->prepare("SELECT * FROM products WHERE name LIKE '%$searchKey%' AND quantity>0 ORDER BY id desc LIMIT $offset,$numOfrecs");
 	$statement->execute();
 	$result = $statement->fetchALl();
 }
@@ -74,8 +74,8 @@ if (empty($_POST['search']) && empty($_COOKIE['search']) && empty($_GET['cat_id'
 						foreach ($categories as $category) :
 						?>
 							<a class="border-bottom-0" href="?cat_id=<?= $category['id'] ?>" style="color:<?php if (isset($_GET['cat_id'])) {
-																														echo ($_GET['cat_id'] == escape($category['id'])) ? "#828bb3" : '';
-																													} ?>">
+																												echo ($_GET['cat_id'] == escape($category['id'])) ? "#828bb3" : '';
+																											} ?>">
 								<span class="lnr lnr-arrow-right"></span><?= strtoupper(escape($category['name'])) ?>
 							</a>
 						<?php endforeach; ?>
@@ -133,12 +133,11 @@ if (empty($_POST['search']) && empty($_COOKIE['search']) && empty($_GET['cat_id'
 											<h6 class="l-through">$210.00</h6>
 										</div>
 										<div class="prd-bottom">
-
-											<a href="" class="social-info">
+											<a href="addtocart.php?id=<?= $value['id'] ?>&qty=1" class="social-info">
 												<span class="ti-bag"></span>
 												<p class="hover-text">add to bag</p>
 											</a>
-											<a href="product_detail.php?pid=<?=$value['id']?>" class="social-info">
+											<a href="product_detail.php?pid=<?= $value['id'] ?>" class="social-info">
 												<span class="lnr lnr-move"></span>
 												<p class="hover-text">view more</p>
 											</a>
