@@ -23,7 +23,7 @@ $numOfrecs = 3;
 //algorithm to find offset value 
 $offset = ($pageNo - 1) * $numOfrecs;
 
-if (empty($_POST['search']) && empty($_COOKIE['search'])) {
+if (empty($_POST['search']) && empty($_COOKIE['search']) && empty($_GET['cat_id'])) {
 	////pdo section
 	$statement = $pdo->prepare("SELECT * FROM products ORDER BY id desc");
 	$statement->execute();
@@ -33,6 +33,16 @@ if (empty($_POST['search']) && empty($_COOKIE['search'])) {
 	//offseted result values
 	$statement = $pdo->prepare("SELECT * FROM products ORDER BY id desc LIMIT $offset,$numOfrecs");
 	$statement->execute();
+	$result = $statement->fetchALl();
+} elseif (isset($_GET['cat_id'])) {
+	$statement = $pdo->prepare("SELECT * FROM products WHERE category_id=:cat_id ORDER BY id desc");
+	$statement->execute([':cat_id' => $_GET['cat_id']]);
+	$RawResult = $statement->fetchALl();
+	//calculate count of pages 
+	$totalPages = ceil(count($RawResult) / $numOfrecs);
+	//offseted result values
+	$statement = $pdo->prepare("SELECT * FROM products WHERE category_id=:cat_id ORDER BY id desc LIMIT $offset,$numOfrecs");
+	$statement->execute([':cat_id' => $_GET['cat_id']]);
 	$result = $statement->fetchALl();
 } else {
 	////find Search value from search bar
@@ -54,7 +64,7 @@ if (empty($_POST['search']) && empty($_COOKIE['search'])) {
 	<div class="row">
 		<div class="col-xl-3 col-lg-4 col-md-5">
 			<div class="sidebar-categories">
-				<div class="head">Browse Categories</div>
+				<div class="head"><a href="index.php" style="text-decoration:none;color:white">Browse Categories</a></div>
 				<ul class="main-categories">
 					<li class="main-nav-list">
 						<?php
@@ -63,8 +73,10 @@ if (empty($_POST['search']) && empty($_COOKIE['search'])) {
 						$categories = $catstmt->fetchAll(PDO::FETCH_ASSOC);
 						foreach ($categories as $category) :
 						?>
-							<a class="border-bottom-0" href="#" data-toggle="collapse">
-								<span class="lnr lnr-arrow-right"></span><?= escape($category['name']) ?>
+							<a class="border-bottom-0" href="?cat_id=<?= $category['id'] ?>" style="color:<?php if (isset($_GET['cat_id'])) {
+																														echo ($_GET['cat_id'] == escape($category['id'])) ? "#828bb3" : '';
+																													} ?>">
+								<span class="lnr lnr-arrow-right"></span><?= strtoupper(escape($category['name'])) ?>
 							</a>
 						<?php endforeach; ?>
 					</li>
@@ -126,7 +138,7 @@ if (empty($_POST['search']) && empty($_COOKIE['search'])) {
 												<span class="ti-bag"></span>
 												<p class="hover-text">add to bag</p>
 											</a>
-											<a href="" class="social-info">
+											<a href="product_detail.php?pid=<?=$value['id']?>" class="social-info">
 												<span class="lnr lnr-move"></span>
 												<p class="hover-text">view more</p>
 											</a>
