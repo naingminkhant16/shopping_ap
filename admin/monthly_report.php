@@ -19,7 +19,7 @@ if ($_SESSION['user_role'] != 1) {
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Weekly Report</h3>
+            <h3 class="card-title">Monthly Report</h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -35,10 +35,13 @@ if ($_SESSION['user_role'] != 1) {
               </thead>
               <tbody>
                 <?php
-                $currentDate = date('Y-m-d');
+                $currentDate=date('Y-m-d');
+                $currentDay = date('d');
                 $fromDate = date('Y-m-d', strtotime('tomorrow'));
-                $toDate = date('Y-m-d', strtotime($currentDate . '-7 day'));
-
+                $toDate = date('Y-m-d', strtotime($currentDate . '-'.$currentDay.' day'));
+                // echo "<pre>";
+                // echo $fromDate.'|';
+                // echo $toDate.'';die();
                 $statement = $pdo->prepare("SELECT * FROM sale_orders WHERE order_date<:fromDate AND order_date>:toDate  ORDER BY id desc");
                 $statement->execute([
                   ':fromDate' => $fromDate,
