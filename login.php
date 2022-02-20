@@ -91,8 +91,8 @@ if ($_POST) {
 				<div class="col-first">
 					<h1>Login</h1>
 					<nav class="d-flex align-items-center">
-						<a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-						<a href="category.html">Login/Register</a>
+						<a href="login.php">Login&nbsp;</a>
+						<a href="register.php">/Register</a>
 					</nav>
 				</div>
 			</div>

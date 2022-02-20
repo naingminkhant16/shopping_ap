@@ -52,15 +52,16 @@ require "config/common.php";
 					</button>
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<?php
-						$cart=0;
-						if(isset($_SESSION['cart'])){
-							foreach($_SESSION['cart'] as $qty){
-								$cart+=$qty;							}
+					$cart = 0;
+					if (isset($_SESSION['cart'])) {
+						foreach ($_SESSION['cart'] as $qty) {
+							$cart += $qty;
 						}
+					}
 					?>
 					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 						<ul class="nav navbar-nav navbar-right">
-							<li class="nav-item"><a href="cart.php" class="cart"><span class="ti-bag"></span></a><?=$cart?></li>
+							<li class="nav-item"><a href="cart.php" class="cart"><span class="ti-bag"></span></a><?= $cart ?></li>
 							<li class="nav-item">
 								<button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
 							</li>
@@ -87,8 +88,10 @@ require "config/common.php";
 		<div class="container">
 			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
 				<div class="col-first">
-					<h1>Welcome</h1>
-
+					<h1>Welcome <?=$_SESSION['user_name']?></h1>
+					<nav class="d-flex align-items-center">
+						<a href="logout.php" class="btn btn-danger">Logout</a>
+					</nav>
 				</div>
 			</div>
 		</div>

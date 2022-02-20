@@ -1,5 +1,8 @@
 <?php require 'header.php';
 require 'config/config.php';
+if (empty($_SESSION['user_id']) && empty($_SESSION['user_role'])) {
+    header("location: login.php");
+}
 ?>
 
 <!--================Cart Area =================-->
@@ -90,6 +93,7 @@ require 'config/config.php';
                             </tr>
                         </tbody>
                     </table>
+                <?php else : echo "<h1 style='text-align:center;margin:40px auto'>No Cart Item Yet.</h1>" ?>
                 <?php endif; ?>
             </div>
         </div>

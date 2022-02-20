@@ -1,5 +1,5 @@
-<?php include('header.php') ?>
 <?php
+include('header.php');
 require "config/config.php";
 
 if (empty($_SESSION['user_id']) && empty($_SESSION['user_role'])) {
@@ -149,7 +149,7 @@ if (empty($_POST['search']) && empty($_COOKIE['search']) && empty($_GET['cat_id'
 					endif;
 					?>
 				</div>
-				<a href="logout.php" type="button" class="btn btn-secondary float-right">Logout</a><br>
+				<!-- <a href="logout.php" type="button" class="btn btn-secondary float-right">Logout</a><br> -->
 			</section>
 			<!-- End Best Seller -->
 			<?php include('footer.php'); ?>

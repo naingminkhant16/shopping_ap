@@ -3,6 +3,10 @@ session_start();
 require 'config/config.php';
 require 'config/common.php';
 
+if (empty($_SESSION['user_id']) && empty($_SESSION['user_role'])) {
+	header("location: login.php");
+}
+
 if (isset($_SESSION['cart'])) {
 	$userId = $_SESSION['user_id'];
 	$total = 0;
@@ -99,15 +103,7 @@ if (isset($_SESSION['cart'])) {
 				</div>
 			</nav>
 		</div>
-		<div class="search_input" id="search_input_box">
-			<div class="container">
-				<form class="d-flex justify-content-between">
-					<input type="text" class="form-control" id="search_input" placeholder="Search Here">
-					<button type="submit" class="btn"></button>
-					<span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
-				</form>
-			</div>
-		</div>
+
 	</header>
 	<!-- End Header Area -->
 
@@ -118,7 +114,8 @@ if (isset($_SESSION['cart'])) {
 				<div class="col-first">
 					<h1>Confirmation</h1>
 					<nav class="d-flex align-items-center">
-						<a href="index.php">Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="index.php">Home | </span></a>
+						<a href="logout.php">&nbsp;Logout</a>
 					</nav>
 				</div>
 			</div>
