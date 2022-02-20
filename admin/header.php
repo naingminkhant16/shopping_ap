@@ -21,6 +21,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- jquery data table css  -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -117,6 +119,38 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   orders
                 </p>
               </a>
+            </li>
+            <li class="nav-item has-treeview menu">
+              <a href="" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>Reporting <i class="right fas fa-angle-left"></i></p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="weekly_report.php" class="nav-link">
+                    <i class="far  fa-circle nav-icon"></i>
+                    <p>Weekly Reporting</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="monthly_report.php" class="nav-link">
+                    <i class="far  fa-circle nav-icon"></i>
+                    <p>Monthly Reporting</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="best_seller.php" class="nav-link">
+                    <i class="far  fa-circle nav-icon"></i>
+                    <p>Best Seller Items</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="premium_cus.php" class="nav-link">
+                    <i class="far  fa-circle nav-icon"></i>
+                    <p>Premium Customers</p>
+                  </a>
+                </li>
+              </ul>
             </li>
           </ul>
         </nav>
