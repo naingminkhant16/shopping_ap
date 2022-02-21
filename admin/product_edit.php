@@ -21,17 +21,16 @@ if ($_POST) {
         }
         if (empty($_POST['quantity'])) {
             $quantityError = "Product's quantity is required";
-        } elseif (isset($_POST['quantity']) && !(is_int(intval($_POST['quantity'])))) {
-            $quantityError = "Quantity should be integer value";
         }
         if (empty($_POST['category'])) {
             $catError = "Product's category is required";
         }
         if (empty($_POST['price'])) {
             $priceError = "Product's price is required";
-        } elseif (isset($_POST['price']) && !(is_int(intval($_POST['price'])))) {
-            $priceError = "Price should be integer value";
         }
+    } elseif (!is_numeric($_POST['quantity']) || !is_numeric($_POST['price'])) {
+        if (!is_numeric($_POST['quantity'])) $quantityError = "Quantity should be integer value";
+        if (!is_numeric($_POST['price'])) $priceError = "Price should be integer value";
     } else {
         if ($_FILES['image']['error'] == 0) {
             $file = "images/" . $_FILES['image']['name'];

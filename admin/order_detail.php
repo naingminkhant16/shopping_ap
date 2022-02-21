@@ -52,7 +52,7 @@ if ($_SESSION['user_role'] != 1) {
                                 //calculate count of pages 
                                 $totalPages = ceil(count($RawResult) / $numOfrecs);
                                 //offseted result values
-                                $statement = $pdo->prepare("SELECT * FROM sale_order_detail WHERE sale_order_id=" . $_GET['id']." LIMIT $offset,$numOfrecs");
+                                $statement = $pdo->prepare("SELECT * FROM sale_order_detail WHERE sale_order_id=" . $_GET['id'] . " LIMIT $offset,$numOfrecs");
                                 $statement->execute();
                                 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -85,7 +85,7 @@ if ($_SESSION['user_role'] != 1) {
                         <a href="order_list.php" type="button" class="btn btn-default">Back</a>
                         <nav aria-label="Page navigation example" style="float:right">
                             <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="?pageNo=1">First</a></li>
+                                <li class="page-item"><a class="page-link" href="?id=<?= $_GET['id'] ?>&pageNo=1">First</a></li>
                                 <li class="page-item">
                                     <a class="page-link btn <?php
                                                             if ($pageNo <= 1) {
@@ -93,7 +93,7 @@ if ($_SESSION['user_role'] != 1) {
                                                             } ?>" href="<?php if ($pageNo <= 1) {
                                                                             echo "#";
                                                                         } else {
-                                                                            echo "?pageNo=" . $pageNo - 1;
+                                                                            echo "?id=" . $_GET['id'] . "&pageNo=" . $pageNo - 1;
                                                                         }
 
                                                                         ?>">Previous</a>
@@ -105,11 +105,11 @@ if ($_SESSION['user_role'] != 1) {
                                                             } ?>" href="<?php if ($pageNo >= $totalPages) {
                                                                             echo '#';
                                                                         } else {
-                                                                            echo "?pageNo=" . $pageNo + 1;
+                                                                            echo "?id=" . $_GET['id'] . "&pageNo=" . $pageNo + 1;
                                                                         }
                                                                         ?>">Next</a>
                                 </li>
-                                <li class="page-item"><a class="page-link" href="?pageNo=<?= $totalPages ?>">Last</a></li>
+                                <li class="page-item"><a class="page-link" href="?id=<?= $_GET['id'] ?>&pageNo=<?= $totalPages ?>">Last</a></li>
                             </ul>
                         </nav>
                     </div>

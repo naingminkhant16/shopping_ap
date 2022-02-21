@@ -23,7 +23,6 @@ if ($_SESSION['user_role'] != 1) {
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <a href="cat_add.php" class="btn btn-success">Create Category</a><br><br>
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
@@ -71,11 +70,11 @@ if ($_SESSION['user_role'] != 1) {
                                                 <p>$-<?= escape($value['total_price']) ?></p>
                                             </td>
                                             <td>
-                                                <p><?= escape(date('Y-m-d',strtotime($value['order_date']))) ?></p>
+                                                <p><?= escape(date('Y-m-d', strtotime($value['order_date']))) ?></p>
                                             </td>
                                             <td>
                                                 <div class="d-flex">
-                                                    <a href="order_detail.php?id=<?= $value['id'] ?>" type="button" class="btn btn-primary m-1">Details</a>                                                    
+                                                    <a href="order_detail.php?id=<?= $value['id'] ?>" type="button" class="btn btn-primary m-1">Details</a>
                                                 </div>
                                             </td>
                                         </tr>
