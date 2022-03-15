@@ -40,9 +40,7 @@ if ($_SESSION['user_role'] != 1) {
                                     foreach ($best_result as $qty) {
                                         $total += $qty['quantity'];
                                     }
-                                    if ($total > 1) :
-
-
+                                    if ($total > 5) :
                             ?>
                                         <div class="col">
                                             <div class="card">
